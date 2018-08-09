@@ -2,9 +2,9 @@
 
 NAME="video-hybrid-intel-nvidia-390xx-bumblebee"
 INFO="Hybrid bumblebee solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2018.05.04"
+VERSION="2018.08.09"
 FREEDRIVER="false"
-PRIORITY="8"
+PRIORITY="7"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
