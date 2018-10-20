@@ -2,7 +2,7 @@
 
 NAME="video-virtualbox"
 INFO="X.org virtualbox video driver. Standard driver for use in a virtualbox emulation."
-VERSION="2017.03.12"
+VERSION="2018.10.20"
 FREEDRIVER="true"
 PRIORITY="1"
 
@@ -11,25 +11,4 @@ VENDORIDS="80ee"
 DEVICEIDS="*"
 
 # Dependencies
-DEPENDS="virtualbox-guest-utils"
 DEPKMOD="virtualbox-guest-modules"
-
-MODULESFILE="/etc/modules-load.d/mhwd-virtualbox.conf"
-VBOXSCRIPT="/etc/profile.d/VBoxClient.sh"
-
-post_install()
-{
-	MHWD_HEADING "${MODULESFILE}"
-	echo "vboxguest" >> "${MODULESFILE}"
-	echo "vboxsf" >> "${MODULESFILE}"
-	echo "vboxvideo" >> "${MODULESFILE}"
-
-	echo "#!/bin/bash" > "${VBOXSCRIPT}"
-	echo "" >> "${VBOXSCRIPT}"
-	echo "/usr/bin/VBoxClient-all > /dev/null" >> "${VBOXSCRIPT}"
-	chmod a+x "${VBOXSCRIPT}"
-
-	modprobe vboxguest
-	modprobe vboxsf
-	modprobe vboxvideo
-}
