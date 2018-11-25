@@ -13,3 +13,13 @@ DEVICEIDS="*"
 # Dependencies
 DEPENDS="virtualbox-guest-utils"
 DEPKMOD="virtualbox-guest-modules"
+
+VBOXSCRIPT="/etc/profile.d/VBoxClient.sh"
+
+post_install()
+{
+	echo "#!/bin/bash" > "${VBOXSCRIPT}"
+	echo "" >> "${VBOXSCRIPT}"
+	echo "/usr/bin/VBoxClient-all > /dev/null" >> "${VBOXSCRIPT}"
+	chmod a+x "${VBOXSCRIPT}"
+}
