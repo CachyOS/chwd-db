@@ -2,7 +2,7 @@
 
 NAME="video-virtualbox"
 INFO="X.org virtualbox video driver. Standard driver for use in a virtualbox emulation."
-VERSION="2018.10.20"
+VERSION="2018.11.25"
 FREEDRIVER="true"
 PRIORITY="1"
 
@@ -11,4 +11,5 @@ VENDORIDS="80ee"
 DEVICEIDS="*"
 
 # Dependencies
+DEPENDS="virtualbox-guest-utils"
 DEPKMOD="virtualbox-guest-modules"
