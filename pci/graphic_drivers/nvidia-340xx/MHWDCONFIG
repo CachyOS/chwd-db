@@ -2,7 +2,7 @@
 
 NAME="video-nvidia-340xx"
 INFO="Closed source NVIDIA legacy drivers for linux."
-VERSION="2018.08.09"
+VERSION="2019.08.23"
 FREEDRIVER="false"
 PRIORITY="3"
 
@@ -11,12 +11,12 @@ VENDORIDS="10de"
 DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-340xx.ids"
 
 # Conflicts
-CONFLICTS="nvidia-utils nvidia-304xx-utils"
-CONFLICTS_64="lib32-nvidia-utils lib32-nvidia-304xx-utils"
+CONFLICTS="nvidia-390xx-utils nvidia-418xx-utils nvidia-430xx-utils nvidia-435xx-utils"
+CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-418xx-utils lib32-nvidia-430xx-utils lib32-nvidia-435xx-utils"
 CONKMOD="nvidia nvidia-304xx"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video-hybrid-intel-nvidia-bumblebee video-hybrid-intel-nvidia-304xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-nvidia video-nvidia-304xx video-nvidia-390xx"
+MHWDCONFLICTS="video-intel video-nvidia-435xx video-nvidia-430xx video-nvidia-418xx video-nvidia-390xx video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
 
 # Dependencies
 DEPENDS="nvidia-340xx-utils"
