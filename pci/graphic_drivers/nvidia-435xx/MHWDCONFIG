@@ -1,0 +1,79 @@
+# mhwd Driver Config
+
+NAME="video-nvidia-435xx"
+INFO="Closed source NVIDIA drivers for linux."
+VERSION="2019.08.24"
+FREEDRIVER="false"
+PRIORITY="6"
+
+CLASSIDS="0300 0302"
+VENDORIDS="10de"
+DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-435xx.ids"
+
+# Conflicts
+CONFLICTS="nvidia-340xx-utils nvidia-390xx-utils nvidia-418xx-utils nvidia-430xx-utils"
+CONFLICTS_64="lib32-nvidia-340xx-utils lib32-nvidia-390xx-utils lib32-nvidia-418xx-utils lib32-nvidia-430xx-utils"
+CONKMOD="nvidia-340xx nvidia-390xx nvidia-418xx nvidia-435xx"
+
+# Conflicts with other mhwd configs
+MHWDCONFLICTS="video-intel video-nvidia-430xx video-nvidia-418xx video-nvidia-390xx video-nvidia-340xx video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
+
+# Dependencies
+DEPENDS="nvidia-435xx-utils"
+DEPENDS_64="lib32-nvidia-435xx-utils"
+DEPKMOD="nvidia-435xx"
+
+XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
+MHWDGPU_BLCKLSTNVIDIA="/etc/modprobe.d/mhwd-gpu.conf"
+MHWDGPU_MODLDNVIDIA="/etc/modules-load.d/mhwd-gpu.conf"
+
+fix_screen_flickering()
+{
+	sed -i /'Section "Device"'/,/'EndSection'/s/'EndSection'/"\tOption \"RegistryDwords\" \"PowerMizerEnable=0x1; PerfLevelSrc=0x2222; PowerMizerDefault=0x2; PowerMizerDefaultAC=0x1\"\nEndSection"/g "${XORGFILE}"
+}
+
+
+
+post_install()
+{
+	nvidia-xconfig -o "${XORGFILE}" --composite &>/dev/null
+	MHWD_ADD_BACKSPACE "${XORGFILE}"
+
+	# Remove logo
+	sed -i /'Section "Device"'/,/'EndSection'/s/'EndSection'/"\tOption \"NoLogo\" \"1\"\nEndSection"/g "${XORGFILE}"
+
+	# Fix screen flickering for some nvidia devices
+	MHWD_FUNC_ON_MATCH 0300 10de "0400 0401 0402 0403 0407 0409 0425" fix_screen_flickering
+
+	mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
+
+	# Without this 'glxgears' don't work in live-session
+	MODULES_LOAD="/etc/modules-load.d"
+	echo "nvidia-drm" >> "${MODULES_LOAD}/mhwd-gpu.conf"
+	if [ ! "$(pgrep X)" ];	then
+		modprobe nvidia-drm
+	fi
+}
+
+
+
+post_remove()
+{
+	if [ -e "${XORGFILE}" ]; then
+		rm "${XORGFILE}"
+	fi
+
+	if [ -f "${MHWDGPU_BLCKLSTNVIDIA}" ]; then
+		sed -i '/^blacklist nouveau/d' "${MHWDGPU_BLCKLSTNVIDIA}"
+		sed -i '/^blacklist ttm/d' "${MHWDGPU_BLCKLSTNVIDIA}"
+		sed -i '/^blacklist drm_kms_helper/d' "${MHWDGPU_BLCKLSTNVIDIA}"
+		sed -i '/^blacklist drm/d' "${MHWDGPU_BLCKLSTNVIDIA}"
+	fi
+
+	if [ -f "${MHWDGPU_MODLDNVIDIA}" ]; then
+		sed -i '/^nvidia/d' "${MHWDGPU_MODLDNVIDIA}"
+	fi
+
+	mhwd-gpu --check
+}
+
