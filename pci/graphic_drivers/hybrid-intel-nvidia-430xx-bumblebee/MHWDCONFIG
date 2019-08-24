@@ -2,9 +2,9 @@
 
 NAME="video-hybrid-intel-nvidia-430xx-bumblebee"
 INFO="Hybrid bumblebee solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2019.08.23"
+VERSION="2019.08.24"
 FREEDRIVER="false"
-PRIORITY="9"
+PRIORITY="10"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
@@ -21,10 +21,10 @@ BLACKLISTEDDEVICEIDS="0be1 8108"
 MHWDCONFLICTS="video-intel video-nvidia-435xx video-nvidia-430xx video-nvidia-418xx video-nvidia-390xx video-nvidia-340xx video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
 
 # Dependencies
-DEPENDS="bumblebee nvidia-utils xf86-video-intel"
+DEPENDS="bumblebee nvidia-430xx-utils xf86-video-intel"
 [[ -d /run/openrc ]] && DEPENDS="bumblebee-openrc nvidia-utils xf86-video-intel"
-DEPENDS_64="lib32-primus lib32-nvidia-utils"
-DEPKMOD="nvidia bbswitch"
+DEPENDS_64="lib32-primus lib32-nvidia-430xx-utils"
+DEPKMOD="nvidia-430xx bbswitch"
 
 XORGFILE="/etc/X11/mhwd.d/intel.conf"
 BXORGFILE="/etc/bumblebee/xorg.conf.nvidia"

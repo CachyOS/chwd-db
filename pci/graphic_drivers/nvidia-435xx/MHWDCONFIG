@@ -4,7 +4,7 @@ NAME="video-nvidia-435xx"
 INFO="Closed source NVIDIA drivers for linux."
 VERSION="2019.08.24"
 FREEDRIVER="false"
-PRIORITY="6"
+PRIORITY="7"
 
 CLASSIDS="0300 0302"
 VENDORIDS="10de"
