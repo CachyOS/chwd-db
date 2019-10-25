@@ -1,27 +1,27 @@
 # mhwd Driver Config
 
-NAME="video-nvidia-418xx"
+NAME="video-nvidia-440xx"
 INFO="Closed source NVIDIA drivers for linux."
 VERSION="2019.10.25"
 FREEDRIVER="false"
-PRIORITY="5"
+PRIORITY="8"
 
 CLASSIDS="0300 0302"
 VENDORIDS="10de"
-DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-418xx.ids"
+DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-440xx.ids"
 
 # Conflicts
-CONFLICTS="nvidia-340xx-utils nvidia-390xx-utils nvidia-430xx-utils nvidia-435xx-utils  nvidia-440xx-utils"
-CONFLICTS_64="lib32-nvidia-340xx-utils lib32-nvidia-390xx-utils lib32-nvidia-430xx-utils lib32-nvidia-435xx-utils lib32-nvidia-440xx-utils"
-CONKMOD="nvidia-340xx nvidia-390xx nvidia-430xx nvidia-435xx nvidia-440xx"
+CONFLICTS="nvidia-340xx-utils nvidia-390xx-utils nvidia-418xx-utils nvidia-430xx-utils nvidia-435xx-utils"
+CONFLICTS_64="lib32-nvidia-340xx-utils lib32-nvidia-390xx-utils lib32-nvidia-418xx-utils lib32-nvidia-430xx-utils lib32-nvidia-435xx-utils"
+CONKMOD="nvidia-340xx nvidia-390xx nvidia-418xx nvidia-430xx nvidia-435xx"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video-intel video-nvidia-440xx video-nvidia-435xx video-nvidia-430xx video-nvidia-390xx video-nvidia-340xx video-hybrid-intel-nvidia-435xx-bumblebee video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
+MHWDCONFLICTS="video-intel video-nvidia-435xx video-nvidia-430xx video-nvidia-418xx video-nvidia-390xx video-nvidia-340xx video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
 
 # Dependencies
-DEPENDS="nvidia-418xx-utils"
-DEPENDS_64="lib32-nvidia-418xx-utils"
-DEPKMOD="nvidia-418xx"
+DEPENDS="nvidia-440xx-utils"
+DEPENDS_64="lib32-nvidia-440xx-utils"
+DEPKMOD="nvidia-440xx"
 
 XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
 MHWDGPU_BLCKLSTNVIDIA="/etc/modprobe.d/mhwd-gpu.conf"
