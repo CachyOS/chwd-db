@@ -16,7 +16,7 @@ CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-418xx-utils lib32-nvidia-430
 CONKMOD="nvidia-390xx nvidia-418xx nvidia-430xx nvidia-435xx nvidia-440xx"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video-intel video-nvidia-440xx video-nvidia-435xx video-nvidia-430xx video-nvidia-418xx video-nvidia-390xx video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nouveau-bumblebee"
+MHWDCONFLICTS="video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-435xx-prime video-hybrid-intel-nvidia-440xx-prime video-nvidia-390xx video-nvidia-418xx video-nvidia-430xx video-nvidia-435xx video-nvidia-440xx"
 
 # Dependencies
 DEPENDS="nvidia-340xx-utils"
