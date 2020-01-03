@@ -1,0 +1,73 @@
+# mhwd Driver Config
+
+NAME="video-virtualmachine"
+INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
+VERSION="2018.11.25"
+FREEDRIVER="true"
+PRIORITY="1"
+
+CLASSIDS="0300"
+# Virtualbox version 6.0 uses VMSVGA on Linux guests by default, which has VMWare's VENDORID.
+VENDORIDS="80ee 15AD"
+DEVICEIDS="*"
+
+# Dependencies, gtkmm3 is needed to enable copy/paste support with vmware
+DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse gtkmm3"
+DEPKMOD="virtualbox-guest-modules"
+
+XDGAUTOSTARTFILE="/etc/xdg/autostart/mhwd-vmsvga-alert.desktop"
+
+autostart()
+{
+	cat <<EOF > "${XDGAUTOSTARTFILE}"
+[Desktop Entry]
+Type=Application
+Exec=bash -c "[[ '\$(lspci -nn | grep 'VMware')' != '' ]] && [[ '\$(systemd-detect-virt)' == 'oracle' ]] && notify-send -u critical -a MHWD 'Set your Virtualbox Graphics Controller to VBoxSVGA to enable window resizing'"
+X-GNOME-Autostart-enabled=true
+X-KDE-autostart-after=panel
+EOF
+	# Has to be added separately because MHWD thinks this is the config name
+	echo Name=MHWD VMSVGA detection >> "${XDGAUTOSTARTFILE}"
+}
+
+post_install()
+{
+	if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+		# Virtualbox detected
+
+		# Automatically check if Virtualbox is set to VMSVGA mode and tell the user to switch away
+		autostart
+
+		if [[ ! -d /run/openrc ]]; then
+			# Load kernel modules and sync clock
+			systemctl enable --now vboxservice.service
+		fi
+		# We have to make /dev/vboxuser read-write, otherwise VBoxClient won't be able to connect. This is not done automatically until the next reboot.
+		chmod 666 /dev/vboxuser
+	elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
+		# Vmware detected
+
+		if [[ ! -d /run/openrc ]]; then
+			systemctl enable --now vmtoolsd.service
+		fi
+	fi
+}
+
+post_remove()
+{
+	rm -f "${XDGAUTOSTARTFILE}"
+
+	if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
+		# Virtualbox detected
+
+		if [[ ! -d /run/openrc ]]; then
+			systemctl disable --now vboxservice.service
+		fi
+	elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
+		# Vmware detected
+
+		if [[ ! -d /run/openrc ]]; then
+			systemctl disable --now vmtoolsd.service
+		fi
+	fi
+}
