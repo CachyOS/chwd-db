@@ -2,7 +2,7 @@
 
 NAME="video-virtualmachine"
 INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
-VERSION="2018.11.25"
+VERSION="2020.01.06"
 FREEDRIVER="true"
 PRIORITY="1"
 
@@ -47,6 +47,9 @@ post_install()
 	elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
 		# Vmware detected
 
+		# Remove VBOX-Client when running on VMWare
+		rm -f "/etc/xdg/autostart/vboxclient.desktop"
+
 		if [[ ! -d /run/openrc ]]; then
 			systemctl enable --now vmtoolsd.service
 		fi
@@ -55,10 +58,10 @@ post_install()
 
 post_remove()
 {
-	rm -f "${XDGAUTOSTARTFILE}"
-
 	if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
 		# Virtualbox detected
+
+		rm -f "${XDGAUTOSTARTFILE}"
 
 		if [[ ! -d /run/openrc ]]; then
 			systemctl disable --now vboxservice.service
