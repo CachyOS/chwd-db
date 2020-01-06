@@ -16,18 +16,25 @@ DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmou
 DEPKMOD="virtualbox-guest-modules"
 
 XDGAUTOSTARTFILE="/etc/xdg/autostart/mhwd-vmsvga-alert.desktop"
+MHWDALERTSCRIPT="/var/lib/mhwd/scripts/vmsvga-alert"
 
 autostart()
 {
+    cat <<EOF > "${MHWDALERTSCRIPT}"
+#!/bin/bash
+[[ "\$(lspci -nn | grep 'VMware')" != '' ]] && [[ "\$(systemd-detect-virt)" == 'oracle' ]] && notify-send --icon=dialog-warning -u critical -a MHWD "Window Resizing" "Set your Virtualbox Graphics Controller to VBoxSVGA to enable window resizing"
+EOF
 	cat <<EOF > "${XDGAUTOSTARTFILE}"
 [Desktop Entry]
 Type=Application
-Exec=bash -c "[[ '\$(lspci -nn | grep 'VMware')' != '' ]] && [[ '\$(systemd-detect-virt)' == 'oracle' ]] && notify-send -u critical -a MHWD 'Set your Virtualbox Graphics Controller to VBoxSVGA to enable window resizing'"
+Exec=${MHWDALERTSCRIPT}
 X-GNOME-Autostart-enabled=true
 X-KDE-autostart-after=panel
 EOF
 	# Has to be added separately because MHWD thinks this is the config name
 	echo Name=MHWD VMSVGA detection >> "${XDGAUTOSTARTFILE}"
+	# Set exec
+	chmod +x "${MHWDALERTSCRIPT}"
 }
 
 post_install()
@@ -62,6 +69,7 @@ post_remove()
 		# Virtualbox detected
 
 		rm -f "${XDGAUTOSTARTFILE}"
+		rm -f "${MHWDALERTSCRIPT}"
 
 		if [[ ! -d /run/openrc ]]; then
 			systemctl disable --now vboxservice.service
