@@ -1,0 +1,16 @@
+# mhwd Driver Config
+# All devices not having dedicated drivers will fall back to modesetting video driver.
+
+NAME="video-modesetting"
+INFO="X.org modesetting video driver."
+VERSION="2020.01.13"
+FREEDRIVER="true"
+PRIORITY="1"
+
+CLASSIDS="0300"
+VENDORIDS="*"
+DEVICEIDS="*"
+
+# Dependencies
+DEPENDS=""
+

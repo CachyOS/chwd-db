@@ -2,17 +2,19 @@
 
 NAME="video-virtualmachine"
 INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
-VERSION="2020.01.06"
+VERSION="2020.01.13"
 FREEDRIVER="true"
 PRIORITY="1"
 
 CLASSIDS="0300"
 # Virtualbox version 6.0 uses VMSVGA on Linux guests by default, which has VMWare's VENDORID.
-VENDORIDS="80ee 15AD"
+# VENDOR VMWare=80ee Virtualbox=15AD Redhat(QXL)=1af4 Redhat(VirtIO)=1b36
+VENDORIDS="80ee 15AD 1af4 1b36"
 DEVICEIDS="*"
 
 # Dependencies, gtkmm3 is needed to enable copy/paste support with vmware
-DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse gtkmm3"
+DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent"
+OPTREMDEPENDS="gtkmm3"
 DEPKMOD="virtualbox-guest-modules"
 
 XDGAUTOSTARTFILE="/etc/xdg/autostart/mhwd-vmsvga-alert.desktop"
@@ -51,14 +53,19 @@ post_install()
 		fi
 		# We have to make /dev/vboxuser read-write, otherwise VBoxClient won't be able to connect. This is not done automatically until the next reboot.
 		chmod 666 /dev/vboxuser
-	elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
-		# Vmware detected
-
-		# Remove VBOX-Client when running on VMWare
+	else
+		# Remove VBox-Client desktop file when not running in virtualbox
 		rm -f "/etc/xdg/autostart/vboxclient.desktop"
 
-		if [[ ! -d /run/openrc ]]; then
-			systemctl enable --now vmtoolsd.service
+		if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
+			# Vmware detected
+
+			if [[ ! -d /run/openrc ]]; then
+				systemctl enable --now vmtoolsd.service
+			fi
+		else
+			# Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
+			systemctl start spice-vdagentd.socket
 		fi
 	fi
 }
