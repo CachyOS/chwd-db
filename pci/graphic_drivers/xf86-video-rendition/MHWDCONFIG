@@ -2,9 +2,9 @@
 
 NAME="video-rendition"
 INFO="X.org modesetting video driver. Standard open source driver for rendition graphic cards."
-VERSION="2017.03.12"
+VERSION="2020.01.18"
 FREEDRIVER="true"
-PRIORITY="1"
+PRIORITY="2"
 
 CLASSIDS="0300"
 VENDORIDS="1163"
