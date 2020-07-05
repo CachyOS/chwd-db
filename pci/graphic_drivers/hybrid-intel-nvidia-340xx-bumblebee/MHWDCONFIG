@@ -18,7 +18,7 @@ DEVICEIDS="*"
 BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-435xx-prime video-hybrid-intel-nvidia-440xx-prime video-nvidia-340xx video-nvidia-390xx video-nvidia-418xx video-nvidia-430xx video-nvidia-435xx video-nvidia-440xx"
+MHWDCONFLICTS="video-hybrid-amd-nvidia-435xx-prime video-hybrid-amd-nvidia-440xx-prime video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-435xx-prime video-hybrid-intel-nvidia-440xx-prime video-nvidia-340xx video-nvidia-390xx video-nvidia-418xx video-nvidia-430xx video-nvidia-435xx video-nvidia-440xx [elite@elite-pc nvidia-440xx"
 
 # Dependencies
 DEPENDS="bumblebee nvidia-340xx-utils xf86-video-intel"
