@@ -1,37 +1,37 @@
 # mhwd Driver Config
 
-NAME="video-hybrid-intel-nvidia-435xx-prime"
-INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
+NAME="video-hybrid-amd-nvidia-%VERSION%xx-prime"
+INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source amd driver."
 VERSION="2019.10.25"
 FREEDRIVER="false"
-PRIORITY="20"
+PRIORITY="%PRIORITY%"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
 VENDORIDS="10de"
-DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-435xx.ids"
+DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-%VERSION%xx.ids"
 
-# Intel cards
+# Amd cards
 CLASSIDS="0300"
-VENDORIDS="8086"
+VENDORIDS="1002"
 DEVICEIDS="*"
-BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts
-CONFLICTS="nvidia-340xx-utils nvidia-390xx-utils nvidia-418xx-utils nvidia-430xx-utils nvidia-440xx-utils"
-CONFLICTS_64="lib32-nvidia-340xx-utils lib32-nvidia-390xx-utils lib32-nvidia-418xx-utils lib32-nvidia-430xx-utils lib32-nvidia-440xx-utils"
-CONKMOD="nvidia-340xx nvidia-390xx nvidia-418xx nvidia-430xx nvidia-440xx"
+CONFLICTS="%CONFLICTS%"
+CONFLICTS_64="%CONFLICTS_64%"
+CONKMOD="%CONKMOD%"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video-hybrid-amd-nvidia-435xx-prime video-hybrid-amd-nvidia-440xx-prime video-hybrid-intel-nvidia-340xx-bumblebee video-hybrid-intel-nvidia-390xx-bumblebee video-hybrid-intel-nvidia-418xx-bumblebee video-hybrid-intel-nvidia-430xx-bumblebee video-hybrid-intel-nvidia-435xx-prime video-hybrid-intel-nvidia-440xx-prime video-nvidia-340xx video-nvidia-390xx video-nvidia-418xx video-nvidia-430xx video-nvidia-435xx video-nvidia-440xx [elite@elite-pc nvidia-440xx"
+MHWDCONFLICTS="video*nvidia-*"
+MHWDDEPENDS="video-linux"
 
 # Dependencies (nvidia-prime dependency is technically optional, but adds the prime-run command)
-DEPENDS="nvidia-435xx-utils nvidia-prime"
-DEPENDS_64="lib32-nvidia-435xx-utils"
-DEPKMOD="nvidia-435xx"
+DEPENDS="nvidia-%VERSION%xx-utils nvidia-prime"
+DEPENDS_64="lib32-nvidia-%VERSION%xx-utils"
+DEPKMOD="nvidia-%VERSION%xx"
 
 XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-UDEVFILE="/lib/udev/rules.d/90-mhwd-prime-powermanagement.rules"
+UDEVFILE="/etc/udev/rules.d/90-mhwd-prime-powermanagement.rules"
 MHWDGPU_BLCKLSTNVIDIA="/etc/modprobe.d/mhwd-gpu.conf"
 MHWDGPU_MODLDNVIDIA="/etc/modules-load.d/mhwd-gpu.conf"
 
@@ -55,7 +55,7 @@ ACTION=="bind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200
 ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030000", TEST=="power/control", ATTR{power/control}="on"
 ACTION=="unbind", SUBSYSTEM=="pci", ATTR{vendor}=="0x10de", ATTR{class}=="0x030200", TEST=="power/control", ATTR{power/control}="on"
 EOF
-	echo 'options nvidia "NVreg_DynamicPowerManagement=0x02"' > "${MHWDGPU_BLCKLSTNVIDIA}"
+	echo 'options nvidia "NVreg_DynamicPowerManagement=0x02"' >> "${MHWDGPU_BLCKLSTNVIDIA}"
 }
 
 post_install()
