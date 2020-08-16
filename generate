@@ -9,7 +9,7 @@ PRIORITY=0
 # $4 priority
 function generateConfigForVersion
 {
-  [ ! -z "$4" ] && PRIORITY="$4"
+  [ -n "$4" ] && PRIORITY="$4"
   local CONFLICTS=()
   local CONFLICTS_64=()
   local CONKMOD=()
