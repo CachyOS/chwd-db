@@ -51,13 +51,13 @@ generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/gra
 generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-430xx-bumblebee 430 # 14
 
 # Prime intel
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-435xx-prime 435 16
+generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-435xx-prime 435 15
 generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-440xx-prime 440
 generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-450xx-prime 450
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-455xx-prime 455 # 19
+generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-455xx-prime 455 # 18
 
 # Prime amd
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-435xx-prime 435 16
+generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-435xx-prime 435 15
 generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-440xx-prime 440
 generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-450xx-prime 450
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-455xx-prime 455 # 19
+generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-455xx-prime 455 # 18
