@@ -2,7 +2,7 @@
 
 NAME="video-nvidia-%VERSION%xx"
 INFO="Closed source NVIDIA drivers for linux."
-VERSION="2019.10.25"
+VERSION="%DATE%"
 FREEDRIVER="false"
 PRIORITY="%PRIORITY%"
 

@@ -2,6 +2,7 @@
 
 VERSIONLIST=("340" "390" "418" "430" "435" "440" "450" "455")
 PRIORITY=0
+DATE=$(date +%Y.%m.%d)
 
 # $1 template path
 # $2 output path
@@ -27,7 +28,7 @@ function generateConfigForVersion
   CONKMOD="${CONKMOD[@]}"
 
   mkdir "$2"
-  sed -e "s/%VERSION%/${3}/g; s/%PRIORITY%/${PRIORITY}/g; s/%CONFLICTS%/${CONFLICTS}/g; s/%CONFLICTS_64%/${CONFLICTS_64}/g; s/%CONKMOD%/${CONKMOD}/g"  "$1" > "${2}/MHWDCONFIG"
+  sed -e "s/%DATE%/${DATE}/g; s/%VERSION%/${3}/g; s/%PRIORITY%/${PRIORITY}/g; s/%CONFLICTS%/${CONFLICTS}/g; s/%CONFLICTS_64%/${CONFLICTS_64}/g; s/%CONKMOD%/${CONKMOD}/g"  "$1" > "${2}/MHWDCONFIG"
   let "PRIORITY++"
 }
 

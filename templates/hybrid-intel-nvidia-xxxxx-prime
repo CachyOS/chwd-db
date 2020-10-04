@@ -2,7 +2,7 @@
 
 NAME="video-hybrid-intel-nvidia-%VERSION%xx-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2019.10.25"
+VERSION="%DATE%"
 FREEDRIVER="false"
 PRIORITY="%PRIORITY%"
 
