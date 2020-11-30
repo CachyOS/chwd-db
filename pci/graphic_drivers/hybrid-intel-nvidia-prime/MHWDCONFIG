@@ -1,15 +1,15 @@
 # mhwd Driver Config
 
-NAME="video-hybrid-intel-nvidia-%VERSION%xx-prime"
+NAME="video-hybrid-intel-nvidia-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="%DATE%"
+VERSION="2020.11.30"
 FREEDRIVER="false"
-PRIORITY="%PRIORITY%"
+PRIORITY="6"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
 VENDORIDS="10de"
-DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-%VERSION%xx.ids"
+DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-455xx.ids"
 
 # Intel cards
 CLASSIDS="0300"
@@ -18,18 +18,18 @@ DEVICEIDS="*"
 BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts
-CONFLICTS="%CONFLICTS%"
-CONFLICTS_64="%CONFLICTS_64%"
-CONKMOD="%CONKMOD%"
+CONFLICTS="nvidia-390xx-utils"
+CONFLICTS_64="lib32-nvidia-390xx-utils"
+CONKMOD="nvidia-390xx"
 
 # Conflicts with other mhwd configs
 MHWDCONFLICTS="video*nvidia*"
 MHWDDEPENDS="video-modesetting"
 
 # Dependencies (nvidia-prime dependency is technically optional, but adds the prime-run command)
-DEPENDS="nvidia-%VERSION%xx-utils nvidia-prime"
-DEPENDS_64="lib32-nvidia-%VERSION%xx-utils"
-DEPKMOD="nvidia-%VERSION%xx"
+DEPENDS="nvidia-utils nvidia-prime"
+DEPENDS_64="lib32-nvidia-utils"
+DEPKMOD="nvidia"
 
 XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
 UDEVFILE="/etc/udev/rules.d/90-mhwd-prime-powermanagement.rules"
