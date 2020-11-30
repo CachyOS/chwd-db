@@ -1,6 +1,6 @@
 #!/bin/bash
 
-VERSIONLIST=("340" "390" "418" "430" "435" "440" "450" "455")
+VERSIONLIST=("390" "455")
 PRIORITY=0
 DATE=$(date +%Y.%m.%d)
 
@@ -18,9 +18,15 @@ function generateConfigForVersion
   for i in "${VERSIONLIST[@]/$3}"
   do
     [ -z "$i" ] && continue
-    CONFLICTS+=("nvidia-${i}xx-utils")
-    CONFLICTS_64+=("lib32-nvidia-${i}xx-utils")
-    CONKMOD+=("nvidia-${i}xx")
+    if [ "$i" == "455" ]; then
+        CONFLICTS+=("nvidia-utils")
+        CONFLICTS_64+=("lib32-nvidia-utils")
+        CONKMOD+=("nvidia")
+    else
+        CONFLICTS+=("nvidia-${i}xx-utils")
+        CONFLICTS_64+=("lib32-nvidia-${i}xx-utils")
+        CONKMOD+=("nvidia-${i}xx")
+    fi
   done
 
   CONFLICTS="${CONFLICTS[@]}"
@@ -36,29 +42,14 @@ function generateConfigForVersion
 [ "${CARCH}" = "i686" ] && exit 0
 
 # Stock nvidia drivers
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-340xx 340 3
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-390xx 390
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-418xx 418
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-430xx 430
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-435xx 435
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-440xx 440
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-450xx 450
-generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-455xx 455 # 10
+generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia-390xx 390 3
+generateConfigForVersion templates/nvidia-xxxxx ./pci/graphic_drivers/nvidia 455 # 4
 
 # Bumblebee
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-340xx-bumblebee 340 11
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-390xx-bumblebee 390
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-418xx-bumblebee 418
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-430xx-bumblebee 430 # 14
+generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-bumblebee ./pci/graphic_drivers/hybrid-intel-nvidia-390xx-bumblebee 390 5
 
 # Prime intel
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-435xx-prime 435 15
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-440xx-prime 440
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-450xx-prime 450
-generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-455xx-prime 455 # 18
+generateConfigForVersion templates/hybrid-intel-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-intel-nvidia-prime 455 6
 
 # Prime amd
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-435xx-prime 435 15
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-440xx-prime 440
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-450xx-prime 450
-generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-455xx-prime 455 # 18
+generateConfigForVersion templates/hybrid-amd-nvidia-xxxxx-prime ./pci/graphic_drivers/hybrid-amd-nvidia-prime 455 7

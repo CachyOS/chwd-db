@@ -22,7 +22,7 @@ CONFLICTS_64="%CONFLICTS_64%"
 CONKMOD="%CONKMOD%"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video*nvidia-*"
+MHWDCONFLICTS="video*nvidia*"
 MHWDDEPENDS="video-linux"
 
 # Dependencies (nvidia-prime dependency is technically optional, but adds the prime-run command)

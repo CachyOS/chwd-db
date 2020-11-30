@@ -23,7 +23,7 @@ CONFLICTS_64="%CONFLICTS_64%"
 CONKMOD="%CONKMOD%"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video*nvidia-*"
+MHWDCONFLICTS="video*nvidia*"
 
 # Dependencies
 DEPENDS="bumblebee nvidia-%VERSION%xx-utils xf86-video-intel"
