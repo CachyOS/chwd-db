@@ -9,7 +9,7 @@ PRIORITY="6"
 # NVIDIA cards
 CLASSIDS="0300 0302"
 VENDORIDS="10de"
-DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-455xx.ids"
+DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia.ids"
 
 # Intel cards
 CLASSIDS="0300"
