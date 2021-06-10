@@ -2,7 +2,7 @@
 
 NAME="video-virtualmachine"
 INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
-VERSION="2020.03.26"
+VERSION="2021.06.10"
 FREEDRIVER="true"
 PRIORITY="2"
 
@@ -15,7 +15,6 @@ DEVICEIDS="*"
 # Dependencies, gtkmm3 is needed to enable copy/paste support with vmware
 DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent"
 OPTREMDEPENDS="gtkmm3"
-DEPKMOD="virtualbox-guest-modules"
 
 XDGAUTOSTARTFILE="/etc/xdg/autostart/mhwd-vmsvga-alert.desktop"
 MHWDALERTSCRIPT="/var/lib/mhwd/scripts/vmsvga-alert"
