@@ -41,7 +41,7 @@ post_install()
 			# Vmware detected
 
 			if [[ ! -d /run/openrc ]]; then
-				systemctl enable vmtoolsd.service
+				systemctl enable --now --no-block vmtoolsd.service
 			fi
 		else
 			# Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
