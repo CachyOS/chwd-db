@@ -2,41 +2,19 @@
 
 NAME="video-virtualmachine"
 INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
-VERSION="2021.06.10"
+VERSION="2021.07.24"
 FREEDRIVER="true"
 PRIORITY="2"
 
 CLASSIDS="0300"
 # Virtualbox version 6.0 uses VMSVGA on Linux guests by default, which has VMWare's VENDORID.
-# VENDOR VMWare=80ee Virtualbox=15AD Redhat(QXL)=1af4 Redhat(VirtIO)=1b36
-VENDORIDS="80ee 15AD 1af4 1b36"
+# VENDOR VMWare=80ee Virtualbox=15AD Redhat(QXL)=1af4 Redhat(VirtIO)=1b36 cirrus=1013
+VENDORIDS="80ee 15AD 1af4 1b36 1013"
 DEVICEIDS="*"
 
-# Dependencies, gtkmm3 is needed to enable copy/paste support with vmware
-DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent"
+# Dependencies, gtkmm3 is needed to enable copy/paste support with vmware, xf86-video-qxl is left out on purpose
+DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent"
 OPTREMDEPENDS="gtkmm3"
-
-XDGAUTOSTARTFILE="/etc/xdg/autostart/mhwd-vmsvga-alert.desktop"
-MHWDALERTSCRIPT="/var/lib/mhwd/scripts/vmsvga-alert"
-
-autostart()
-{
-    cat <<EOF > "${MHWDALERTSCRIPT}"
-#!/bin/bash
-[[ "\$(lspci -nn | grep 'VMware')" != '' ]] && [[ "\$(systemd-detect-virt)" == 'oracle' ]] && notify-send --icon=dialog-warning -u critical -a MHWD "Window Resizing" "Set your Virtualbox Graphics Controller to VBoxSVGA to enable window resizing"
-EOF
-	cat <<EOF > "${XDGAUTOSTARTFILE}"
-[Desktop Entry]
-Type=Application
-Exec=${MHWDALERTSCRIPT}
-X-GNOME-Autostart-enabled=true
-X-KDE-autostart-after=panel
-EOF
-	# Has to be added separately because MHWD thinks this is the config name
-	echo Name=MHWD VMSVGA detection >> "${XDGAUTOSTARTFILE}"
-	# Set exec
-	chmod +x "${MHWDALERTSCRIPT}"
-}
 
 gdm_disable_wayland()
 {
@@ -50,18 +28,14 @@ post_install()
 	if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
 		# Virtualbox detected
 
-		# Automatically check if Virtualbox is set to VMSVGA mode and tell the user to switch away
-		autostart
-
 		if [[ ! -d /run/openrc ]]; then
 			# Load kernel modules and sync clock
 			systemctl enable --now vboxservice.service
+			systemctl enable --now vboxclient.service
 		fi
 		# We have to make /dev/vboxuser read-write, otherwise VBoxClient won't be able to connect. This is not done automatically until the next reboot.
 		chmod 666 /dev/vboxuser
 	else
-		# Remove VBox-Client desktop file when not running in virtualbox
-		rm -f "/etc/xdg/autostart/vboxclient.desktop"
 
 		if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
 			# Vmware detected
@@ -71,19 +45,21 @@ post_install()
 			fi
 		else
 			# Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
+			systemctl enable --now spice-vdagentd.service
 			systemctl start spice-vdagentd.socket
+			systemctl enable --now qemu-guest-agent.service
+			sed -i 's/MODULES=.*/MODULES=(qxl bochs_drm virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
+			mkinitcpio -P
 		fi
 	fi
 	gdm_disable_wayland
+	mhwd-gpu --check
 }
 
 post_remove()
 {
 	if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
 		# Virtualbox detected
-
-		rm -f "${XDGAUTOSTARTFILE}"
-		rm -f "${MHWDALERTSCRIPT}"
 
 		if [[ ! -d /run/openrc ]]; then
 			systemctl disable --now vboxservice.service
@@ -95,4 +71,7 @@ post_remove()
 			systemctl disable --now vmtoolsd.service
 		fi
 	fi
+	sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
+	mkinitcpio -P
+	mhwd-gpu --check
 }
