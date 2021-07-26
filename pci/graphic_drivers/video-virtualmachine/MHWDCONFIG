@@ -2,7 +2,7 @@
 
 NAME="video-virtualmachine"
 INFO="X.org vmware video driver and open-vm-tools/virtualbox tools"
-VERSION="2021.07.24"
+VERSION="2021.07.26"
 FREEDRIVER="true"
 PRIORITY="2"
 
@@ -30,8 +30,8 @@ post_install()
 
 		if [[ ! -d /run/openrc ]]; then
 			# Load kernel modules and sync clock
-			systemctl enable --now vboxservice.service
-			systemctl enable --now vboxclient.service
+			systemctl enable --now --no-block vboxservice.service
+			systemctl enable --now --no-block vboxclient.service
 		fi
 		# We have to make /dev/vboxuser read-write, otherwise VBoxClient won't be able to connect. This is not done automatically until the next reboot.
 		chmod 666 /dev/vboxuser
@@ -45,9 +45,8 @@ post_install()
 			fi
 		else
 			# Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
-			systemctl enable --now spice-vdagentd.service
-			systemctl start spice-vdagentd.socket
-			systemctl enable --now qemu-guest-agent.service
+			systemctl enable --now --no-block spice-vdagentd.socket
+			systemctl enable --now --no-block qemu-guest-agent.service
 			sed -i 's/MODULES=.*/MODULES=(qxl bochs_drm virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
 			mkinitcpio -P
 		fi
