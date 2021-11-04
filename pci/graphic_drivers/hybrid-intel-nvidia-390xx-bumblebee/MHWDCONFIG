@@ -2,9 +2,9 @@
 
 NAME="video-hybrid-intel-nvidia-390xx-bumblebee"
 INFO="Hybrid bumblebee solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2020.11.30"
+VERSION="2021.11.04"
 FREEDRIVER="false"
-PRIORITY="5"
+PRIORITY="6"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
@@ -18,9 +18,9 @@ DEVICEIDS="*"
 BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts
-CONFLICTS="nvidia-utils"
-CONFLICTS_64="lib32-nvidia-utils"
-CONKMOD="nvidia"
+CONFLICTS="nvidia-utils nvidia-470xx-utils"
+CONFLICTS_64="lib32-nvidia-utils lib32-nvidia-470xx-utils"
+CONKMOD="nvidia nvidia-470xx"
 
 # Conflicts with other mhwd configs
 MHWDCONFLICTS="video*nvidia*"

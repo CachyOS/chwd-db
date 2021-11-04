@@ -2,9 +2,9 @@
 
 NAME="video-hybrid-amd-nvidia-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source amd driver."
-VERSION="2021.07.28"
+VERSION="2021.11.04"
 FREEDRIVER="false"
-PRIORITY="7"
+PRIORITY="8"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
@@ -17,9 +17,9 @@ VENDORIDS="1002"
 DEVICEIDS="*"
 
 # Conflicts
-CONFLICTS="nvidia-390xx-utils"
-CONFLICTS_64="lib32-nvidia-390xx-utils"
-CONKMOD="nvidia-390xx"
+CONFLICTS="nvidia-390xx-utils nvidia-470xx-utils"
+CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-470xx-utils"
+CONKMOD="nvidia-390xx nvidia-470xx"
 
 # Conflicts with other mhwd configs
 MHWDCONFLICTS="video*nvidia*"
