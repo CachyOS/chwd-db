@@ -1,6 +1,6 @@
 # mhwd Driver Config
 
-NAME="video-hybrid-amd-nvidia-prime"
+NAME="video-hybrid-amd-nvidia-470xx-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source amd driver."
 VERSION="2021.11.04"
 FREEDRIVER="false"
