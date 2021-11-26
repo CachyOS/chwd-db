@@ -2,7 +2,7 @@
 
 NAME="video-nvidia-390xx"
 INFO="Closed source NVIDIA drivers for linux."
-VERSION="2021.11.04"
+VERSION="2021.11.26"
 FREEDRIVER="false"
 PRIORITY="3"
 
@@ -44,6 +44,10 @@ post_install()
 	MHWD_FUNC_ON_MATCH 0300 10de "0400 0401 0402 0403 0407 0409 0425" fix_screen_flickering
 
 	mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
+	
+	echo 'Section "ServerFlags"' >> "${XORGFILE}"
+	echo '  Option "IgnoreABI" "1"' >> "${XORGFILE}"
+	echo 'EndSection' >> "${XORGFILE}"
 
 	# Without this 'glxgears' don't work in live-session
 	MODULES_LOAD="/etc/modules-load.d"

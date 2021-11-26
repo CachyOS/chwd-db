@@ -2,7 +2,7 @@
 
 NAME="video-hybrid-intel-nvidia-390xx-bumblebee"
 INFO="Hybrid bumblebee solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2021.11.04"
+VERSION="2021.11.26"
 FREEDRIVER="false"
 PRIORITY="6"
 
@@ -43,6 +43,10 @@ make_bumblebee_xorg_config()
 	echo 'Section "ServerLayout"' >> "${BXORGFILE}"
 	echo '    Identifier "Layout0"' >> "${BXORGFILE}"
 	echo '    Option "AutoAddDevices" "false"' >> "${BXORGFILE}"
+	echo 'EndSection' >> "${BXORGFILE}"
+	echo '' >> "${BXORGFILE}"
+	echo 'Section "ServerFlags"' >> "${BXORGFILE}"
+	echo '  Option "IgnoreABI" "1"' >> "${BXORGFILE}"
 	echo 'EndSection' >> "${BXORGFILE}"
 	echo '' >> "${BXORGFILE}"
 
