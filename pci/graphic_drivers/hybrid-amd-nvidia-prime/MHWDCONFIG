@@ -2,7 +2,7 @@
 
 NAME="video-hybrid-amd-nvidia-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source amd driver."
-VERSION="2021.11.04"
+VERSION="2021.12.16"
 FREEDRIVER="false"
 PRIORITY="8"
 
@@ -17,7 +17,7 @@ VENDORIDS="1002"
 DEVICEIDS="*"
 
 # Conflicts
-CONFLICTS="nvidia-390xx-utils nvidia-470xx-utils"
+CONFLICTS="nvidia-390xx-utils nvidia-470xx-utils libxnvctrl-470xx"
 CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-470xx-utils"
 CONKMOD="nvidia-390xx nvidia-470xx"
 
@@ -26,7 +26,7 @@ MHWDCONFLICTS="video*nvidia*"
 MHWDDEPENDS="video-linux"
 
 # Dependencies (nvidia-prime dependency is technically optional, but adds the prime-run command)
-DEPENDS="nvidia-utils nvidia-prime"
+DEPENDS="nvidia-utils libxnvctrl nvidia-prime"
 DEPENDS_64="lib32-nvidia-utils"
 DEPKMOD="nvidia"
 

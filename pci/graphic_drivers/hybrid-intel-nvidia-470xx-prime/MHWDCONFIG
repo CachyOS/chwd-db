@@ -2,7 +2,7 @@
 
 NAME="video-hybrid-intel-nvidia-470xx-prime"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2021.11.04"
+VERSION="2021.12.16"
 FREEDRIVER="false"
 PRIORITY="7"
 
@@ -18,7 +18,7 @@ DEVICEIDS="*"
 BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts
-CONFLICTS="nvidia-390xx-utils nvidia-utils"
+CONFLICTS="nvidia-390xx-utils nvidia-utils libxnvctrl"
 CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-utils"
 CONKMOD="nvidia-390xx nvidia"
 
@@ -27,7 +27,7 @@ MHWDCONFLICTS="video*nvidia*"
 MHWDDEPENDS="video-modesetting"
 
 # Dependencies (nvidia-prime dependency is technically optional, but adds the prime-run command)
-DEPENDS="nvidia-470xx-utils nvidia-prime"
+DEPENDS="nvidia-470xx-utils libxnvctrl-470xx nvidia-prime"
 DEPENDS_64="lib32-nvidia-470xx-utils"
 DEPKMOD="nvidia-470xx"
 

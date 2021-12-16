@@ -2,7 +2,7 @@
 
 NAME="video-nvidia-470xx"
 INFO="Closed source NVIDIA drivers for linux."
-VERSION="2021.11.04"
+VERSION="2021.12.16"
 FREEDRIVER="false"
 PRIORITY="4"
 
@@ -11,7 +11,7 @@ VENDORIDS="10de"
 DEVICEIDS=">/var/lib/mhwd/ids/pci/nvidia-470xx.ids"
 
 # Conflicts
-CONFLICTS="nvidia-390xx-utils nvidia-utils"
+CONFLICTS="nvidia-390xx-utils nvidia-utils libxnvctrl"
 CONFLICTS_64="lib32-nvidia-390xx-utils lib32-nvidia-utils"
 CONKMOD="nvidia-390xx nvidia"
 
@@ -19,7 +19,7 @@ CONKMOD="nvidia-390xx nvidia"
 MHWDCONFLICTS="video*nvidia*"
 
 # Dependencies
-DEPENDS="nvidia-470xx-utils"
+DEPENDS="nvidia-470xx-utils libxnvctrl-470xx"
 DEPENDS_64="lib32-nvidia-470xx-utils"
 DEPKMOD="nvidia-470xx"
 
