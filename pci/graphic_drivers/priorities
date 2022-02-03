@@ -1,0 +1,7 @@
+nvidia-390xx-dkms 10
+hybrid-intel-nvidia-390xx-dkms-bumblebee 11
+
+nvidia-dkms 20
+
+nvidia-prime-render-offload 30
+optimus-manager 31

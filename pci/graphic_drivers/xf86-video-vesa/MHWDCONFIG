@@ -1,4 +1,5 @@
 # mhwd Driver Config
+# The purpose of this config is to force Xorg to use the vesa driver for all devices. Deprecated by video-modesetting
 
 NAME="video-vesa"
 INFO="X.org vesa video driver."
@@ -9,6 +10,8 @@ PRIORITY="0"
 CLASSIDS="0300"
 VENDORIDS="*"
 DEVICEIDS="*"
+
+MHWDCONFLICTS="video-modesetting video-linux"
 
 # Dependencies
 DEPENDS="xf86-video-vesa"

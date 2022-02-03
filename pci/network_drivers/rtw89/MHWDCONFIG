@@ -1,0 +1,28 @@
+# mhwd Driver Config
+
+# modinfo rtw89pci
+#alias:          pci:v000010ECd0000A85Asv*sd*bc*sc*i*
+#alias:          pci:v000010ECd00008852sv*sd*bc*sc*i*
+
+NAME="network-rtw89"
+INFO="Driver for Realtek 8852AE, an 802.11ax device"
+VERSION="2021.08.05"
+FREEDRIVER="true"
+PRIORITY="1"
+
+CLASSIDS="0200 0280 0282"
+VENDORIDS="10EC"
+DEVICEIDS="A85A 8852"
+
+# Dependencies
+DEPKMOD="rtw89-dkms-git"
+
+post_install()
+{
+    modprobe rtw89pci
+}
+
+post_remove()
+{
+    modprobe -r rtw89pci
+}

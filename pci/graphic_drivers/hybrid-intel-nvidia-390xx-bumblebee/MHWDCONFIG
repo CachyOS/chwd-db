@@ -1,10 +1,10 @@
 # mhwd Driver Config
 
-NAME="video-hybrid-intel-nvidia-390xx-bumblebee"
+NAME="video-hybrid-intel-nvidia-390xx-dkms-bumblebee"
 INFO="Hybrid bumblebee solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
 VERSION="2021.12.18"
 FREEDRIVER="false"
-PRIORITY="6"
+PRIORITY="11"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
@@ -18,18 +18,17 @@ DEVICEIDS="*"
 BLACKLISTEDDEVICEIDS="0be1 8108"
 
 # Conflicts
-CONFLICTS="nvidia-utils libxnvctrl nvidia-470xx-utils libxnvctrl-470xx"
-CONFLICTS_64="lib32-nvidia-utils lib32-nvidia-470xx-utils"
-CONKMOD="nvidia nvidia-470xx"
+CONFLICTS="nvidia-utils opencl-nvidia nvidia-settings"
+CONFLICTS_64="lib32-nvidia-utils lib32-opencl-nvidia"
+CONKMOD="nvidia-dkms"
 
 # Conflicts with other mhwd configs
-MHWDCONFLICTS="video*nvidia*"
+MHWDCONFLICTS="video*nvidia* video*optimus*"
 
 # Dependencies
-DEPENDS="bumblebee nvidia-390xx-utils libxnvctrl-390xx xf86-video-intel"
-[[ -d /run/openrc ]] && DEPENDS="bumblebee-openrc nvidia-390xx-utils xf86-video-intel"
-DEPENDS_64="lib32-primus lib32-nvidia-390xx-utils"
-DEPKMOD="nvidia-390xx bbswitch"
+DEPENDS="bumblebee primus virtualgl xf86-video-intel nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx"
+DEPENDS_64="lib32-primus lib32-virtualgl lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx"
+DEPKMOD="nvidia-390xx-dkms bbswitch-dkms"
 
 XORGFILE="/etc/X11/mhwd.d/intel.conf"
 BXORGFILE="/etc/bumblebee/xorg.conf.nvidia"
@@ -38,101 +37,97 @@ MODULESBLACKLIST="/etc/modprobe.d/mhwd-nvidia.conf"
 
 make_bumblebee_xorg_config()
 {
-	MHWD_HEADING "${BXORGFILE}"
+    MHWD_HEADING "${BXORGFILE}"
 
-	echo 'Section "ServerLayout"' >> "${BXORGFILE}"
-	echo '    Identifier "Layout0"' >> "${BXORGFILE}"
-	echo '    Option "AutoAddDevices" "false"' >> "${BXORGFILE}"
-	echo 'EndSection' >> "${BXORGFILE}"
-	echo '' >> "${BXORGFILE}"
-	echo 'Section "ServerFlags"' >> "${BXORGFILE}"
-	echo '  Option "IgnoreABI" "1"' >> "${BXORGFILE}"
-	echo 'EndSection' >> "${BXORGFILE}"
-	echo '' >> "${BXORGFILE}"
+    echo 'Section "ServerLayout"' >> "${BXORGFILE}"
+    echo '    Identifier "Layout0"' >> "${BXORGFILE}"
+    echo '    Option "AutoAddDevices" "false"' >> "${BXORGFILE}"
+    echo 'EndSection' >> "${BXORGFILE}"
+    echo '' >> "${BXORGFILE}"
 
-	MHWD_ADD_DEVICE_SECTION_FOR_EACH_BUSID "nvidia" "${BXORGFILE}" 10de "VendorName \"NVIDIA Corporation\"|Option \"NoLogo\" \"true\"|Option \"UseEDID\" \"false\"|Option \"ConnectedMonitor\" \"DFP\""
+    MHWD_ADD_DEVICE_SECTION_FOR_EACH_BUSID "nvidia" "${BXORGFILE}" 10de "VendorName \"NVIDIA Corporation\"|Option \"NoLogo\" \"true\"|Option \"UseEDID\" \"false\"|Option \"ConnectedMonitor\" \"DFP\""
 }
 
 post_install()
 {
-	# Create intel xorg configuration with enabled sna acceleration method
-	MHWD_HEADING "${XORGFILE}"
-	MHWD_ADD_DEVICE_SECTION_FOR_EACH_BUSID "intel" "${XORGFILE}" 8086 "Option      \"AccelMethod\" \"sna\""
-	MHWD_ADD_DRI "${XORGFILE}"
-	MHWD_ADD_COMPOSITING "${XORGFILE}"
-	MHWD_ADD_BACKSPACE "${XORGFILE}"
+    # Create intel xorg configuration with enabled sna acceleration method
+    MHWD_HEADING "${XORGFILE}"
+    MHWD_ADD_DEVICE_SECTION_FOR_EACH_BUSID "intel" "${XORGFILE}" 8086 "Option      \"AccelMethod\" \"sna\""
+    MHWD_ADD_DRI "${XORGFILE}"
+    MHWD_ADD_COMPOSITING "${XORGFILE}"
+    MHWD_ADD_BACKSPACE "${XORGFILE}"
 
-	# Create nvidia bumblebee xorg configuration
-	make_bumblebee_xorg_config
+    # Create nvidia bumblebee xorg configuration
+    make_bumblebee_xorg_config
 
-	MHWD_HEADING "${MODULESFILE}"
-	echo "options bbswitch load_state=0 unload_state=0" >> "${MODULESFILE}"
+    MHWD_HEADING "${MODULESFILE}"
+    echo "options bbswitch load_state=0 unload_state=0" >> "${MODULESFILE}"
 
 
-	MHWD_HEADING "${MODULESBLACKLIST}"
-	echo "blacklist nouveau" >> "${MODULESBLACKLIST}"
-	echo "blacklist nvidia" >> "${MODULESBLACKLIST}"
-	echo "blacklist nvidia-modeset" >> "${MODULESBLACKLIST}"
-	echo "blacklist nvidia-uvm" >> "${MODULESBLACKLIST}"
-	echo "blacklist ttm" >> "${MODULESBLACKLIST}"
-	echo "blacklist drm_kms_helper" >> "${MODULESBLACKLIST}"
-	echo "blacklist drm" >> "${MODULESBLACKLIST}"
+    MHWD_HEADING "${MODULESBLACKLIST}"
+    echo "blacklist nouveau" >> "${MODULESBLACKLIST}"
+    echo "blacklist nvidia" >> "${MODULESBLACKLIST}"
+    echo "blacklist nvidia-modeset" >> "${MODULESBLACKLIST}"
+    echo "blacklist nvidia-uvm" >> "${MODULESBLACKLIST}"
+    echo "blacklist ttm" >> "${MODULESBLACKLIST}"
+    echo "blacklist drm_kms_helper" >> "${MODULESBLACKLIST}"
+    echo "blacklist drm" >> "${MODULESBLACKLIST}"
 
-	# Unload modules if X is not running
-	if [ ! "$(pgrep X)" ];	then
-		rmmod -f nouveau
-		rmmod -f nvidia
-		rmmod -f nvidia-modeset
-		rmmod -f nvidia-uvm
-		rmmod -f ttm
-		rmmod -f drm_kms_helper
-		rmmod -f drm
-	fi
+    # Unload modules if X is not running
+    if [ ! "$(pgrep X)" ];  then
+        rmmod -f nouveau
+        rmmod -f nvidia
+        rmmod -f nvidia-modeset
+        rmmod -f nvidia-uvm
+        rmmod -f ttm
+        rmmod -f drm_kms_helper
+        rmmod -f drm
+    fi
 
-	modprobe bbswitch
+    modprobe bbswitch
 
-	set_bumblebee_driver "nvidia"
+    set_bumblebee_driver "nvidia"
 
-	mhwd-gpu --setxorg "${XORGFILE}"
+    mhwd-gpu --setxorg "${XORGFILE}"
 
-	if [[ -d /run/openrc ]];then
-		rc-update add bumblebee default
-		rc-service bumblebee start
-	else
-		systemctl enable bumblebeed.service
-		systemctl start bumblebeed.service
-	fi
+    if [[ -d /run/openrc ]];then
+        rc-update add bumblebee default
+        rc-service bumblebee start
+    else
+        systemctl enable bumblebeed.service
+        systemctl start bumblebeed.service
+    fi
 }
 
 pre_remove()
 {
-	modprobe -r bbswitch
+    modprobe -r bbswitch
 
-	if [[ -d /run/openrc ]];then
-		rc-update del bumblebee default
-		rc-service bumblebee stop
-	else
-		systemctl disable bumblebeed.service
-		systemctl stop bumblebeed.service
-	fi
+    if [[ -d /run/openrc ]];then
+        rc-update del bumblebee default
+        rc-service bumblebee stop
+    else
+        systemctl disable bumblebeed.service
+        systemctl stop bumblebeed.service
+    fi
 }
 
 post_remove()
 {
-	if [ -e "${XORGFILE}" ]; then
-		rm "${XORGFILE}"
-	fi
-	if [ -e "${MODULESFILE}" ]; then
-		rm "${MODULESFILE}"
-	fi
-	if [ -e "${MODULESBLACKLIST}" ]; then
-		rm "${MODULESBLACKLIST}"
-	fi
+    if [ -e "${XORGFILE}" ]; then
+        rm "${XORGFILE}"
+    fi
+    if [ -e "${MODULESFILE}" ]; then
+        rm "${MODULESFILE}"
+    fi
+    if [ -e "${MODULESBLACKLIST}" ]; then
+        rm "${MODULESBLACKLIST}"
+    fi
 
-	mhwd-gpu --check
+    mhwd-gpu --check
 }
 
 set_bumblebee_driver()
 {
-	sed -i "/(#)/!s/^[ ]*Driver[ ]*=.*/Driver=$1/g" /etc/bumblebee/bumblebee.conf
+    sed -i "/(#)/!s/^[ ]*Driver[ ]*=.*/Driver=$1/g" /etc/bumblebee/bumblebee.conf
 }

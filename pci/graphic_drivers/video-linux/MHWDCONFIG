@@ -2,7 +2,7 @@
 
 NAME="video-linux"
 INFO="Standard open source drivers."
-VERSION="2018.05.04"
+VERSION="2021.08.29"
 FREEDRIVER="true"
 PRIORITY="2"
 
@@ -16,77 +16,45 @@ CLASSIDS="0300 0380 0302"
 # DEVICEIDS *=we want to use the whole range of devices from these vendors
 DEVICEIDS="*"
 
+MHWDCONFLICTS="video-vesa"
+
 # Dependencies
 DEPENDS="xf86-video-ati
-    xf86-video-amdgpu
-    xf86-video-intel
-    xf86-video-nouveau
-    vulkan-intel
-    vulkan-radeon
-    libva-mesa-driver
-    libva-vdpau-driver
-    mesa-vdpau"
-
-DEPENDS_64="lib32-vulkan-intel
-    lib32-vulkan-radeon
-    lib32-libva-vdpau-driver
-    lib32-mesa-vdpau"
+         xf86-video-amdgpu
+         xf86-video-intel
+         xf86-video-nouveau
+         vulkan-intel
+         vulkan-radeon
+         opencl-mesa
+         intel-compute-runtime
+         intel-media-driver
+         libvdpau-va-gl
+         libva-intel-driver
+         libva-mesa-driver
+         libva-vdpau-driver
+         mesa-vdpau
+         vulkan-mesa-layers
+         vulkan-swrast
+         lib32-vulkan-intel
+         lib32-vulkan-radeon
+         lib32-opencl-mesa
+         lib32-mesa-vdpau
+         lib32-libva-intel-driver
+         lib32-libva-mesa-driver
+         lib32-libva-vdpau-driver
+         lib32-vulkan-mesa-layers"
 
 
 post_install()
 {
-    # Set an array of old mhwd scripts, we will replace with this one
-    predecessor=(video-hybrid-intel-amdgpu-prime
-        video-hybrid-intel-nouveau-prime
-        video-hybrid-intel-radeon-prime 
-        video-hybrid-radeon-amdgpu-prime
-        video-ati
-        video-amdgpu
-        video-intel
-        video-nouveau)
-
-    # Another array of mhwd scripts we dont even support anymore
-    legacy_bumblebee=(video-hybrid-intel-nouveau-bumblebee
-        video-hybrid-intel-ati-bumblebee)
-
-    # Find and remove old mhwd scripts, without any need to interact with mhwd 
-    for (( i=0; i<${#predecessor[@]}; i++ ));
-        do
-            if [ -f "/var/lib/mhwd/local/pci/${predecessor[${i}]}/MHWDCONFIG" ]; then
-                    rm "/var/lib/mhwd/local/pci/${predecessor[${i}]}/MHWDCONFIG"
-            fi
-    done
-
-    # Find and remove unsupported mhwd-scripts with all components.
-    # Dont deal with pacman here!
-    for (( i=0; i<${#legacy_bumblebee[@]}; i++ ));
-        do
-            if [ -f "/var/lib/mhwd/local/pci/${legacy_bumblebee[${i}]}/MHWDCONFIG" ]; then
-                    rm "/var/lib/mhwd/local/pci/${legacy_bumblebee[${i}]}/MHWDCONFIG"
-                    
-                    if [ -f "/etc/modprobe.d/mhwd-bbswitch.conf" ]; then
-                            rm "/etc/modprobe.d/mhwd-bbswitch.conf"
-                    fi
-                    if [ -f "/etc/bumblebee/xorg.conf.ati" ]; then
-                            rm "/etc/bumblebee/xorg.conf.ati"
-                    fi
-                    if [ -f "/etc/X11/mhwd.d/intel.conf" ]; then
-                            rm "/etc/X11/mhwd.d/intel.conf"
-                    fi
-                    if [ -f "/etc/bumblebee/xorg.conf.nouveau" ]; then
-                            rm "/etc/bumblebee/xorg.conf.nouveau"
-                    fi
-                    if [ -f "/etc/X11/mhwd.d/intel.conf" ]; then
-                            rm "/etc/X11/mhwd.d/intel.conf"
-                    fi
-                    if [ -f "/etc/modprobe.d/mhwd-nouveau.conf" ]; then
-                            rm "/etc/modprobe.d/mhwd-nouveau.conf"
-                    fi
-                    systemctl disable --now bumblebeed.service
-            fi
-    done
-
     mhwd-gpu --check
+    if [[ $(hwinfo --cpu | grep Vendor: -m1 | cut -d '"' -f2) == "GenuineIntel" ]] ; then
+        sed -i 's/MODULES=.*/MODULES=(crc32c-intel intel_agp i915 amdgpu radeon nouveau)/g' /etc/mkinitcpio.conf
+    else
+        sed -i 's/MODULES=.*/MODULES=(crc32c intel_agp i915 amdgpu radeon nouveau)/g' /etc/mkinitcpio.conf
+    fi
+
+    mkinitcpio -P
 }
 
 post_remove()
