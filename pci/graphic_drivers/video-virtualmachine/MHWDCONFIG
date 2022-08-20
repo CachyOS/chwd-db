@@ -47,7 +47,7 @@ post_install()
 		fi
 	fi
 	gdm_disable_wayland
-	sed -i 's/MODULES=.*/MODULES=(qxl bochs_drm virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
+	sed -i 's/MODULES=.*/MODULES=(qxl virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
 	mkinitcpio -P
 	mhwd-gpu --check
 }
