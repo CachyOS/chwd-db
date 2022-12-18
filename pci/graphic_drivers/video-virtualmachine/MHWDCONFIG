@@ -13,7 +13,7 @@ VENDORIDS="80ee 15AD 1af4 1b36 1013"
 DEVICEIDS="*"
 
 # Dependencies, gtkmm3 is needed to enable copy/paste support with vmware, xf86-video-qxl is left out on purpose
-DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent"
+DEPENDS="virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent vulkan-virtio"
 OPTREMDEPENDS="gtkmm3"
 
 gdm_disable_wayland()
