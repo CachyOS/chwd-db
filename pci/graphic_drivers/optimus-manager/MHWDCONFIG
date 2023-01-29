@@ -2,7 +2,7 @@
 
 NAME="video-optimus-manager"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
-VERSION="2021.08.29"
+VERSION="2022.01.29"
 FREEDRIVER="false"
 PRIORITY="31"
 
@@ -37,10 +37,6 @@ DEPENDS="egl-wayland
          optimus-manager-qt
          bbswitch-dkms
          acpi_call-dkms
-         xf86-video-ati
-         xf86-video-amdgpu
-         xf86-video-intel
-         xf86-video-nouveau
          vulkan-intel
          vulkan-radeon
          opencl-mesa
