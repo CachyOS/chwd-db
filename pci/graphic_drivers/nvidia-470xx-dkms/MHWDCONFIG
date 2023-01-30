@@ -25,7 +25,6 @@ DEPKMOD="nvidia-470xx-dkms"
 
 XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
 MHWDGPU_BLCKLSTNVIDIA="/etc/modprobe.d/mhwd-gpu.conf"
-MHWDGPU_MODLDNVIDIA="/etc/modules-load.d/mhwd-gpu.conf"
 
 post_install()
 {
@@ -52,9 +51,6 @@ post_remove()
         sed -i '/^blacklist drm/d' "${MHWDGPU_BLCKLSTNVIDIA}"
     fi
 
-    if [ -f "${MHWDGPU_MODLDNVIDIA}" ]; then
-        sed -i '/^nvidia/d' "${MHWDGPU_MODLDNVIDIA}"
-    fi
     mkinitcpio -P
     mhwd-gpu --check
 }
