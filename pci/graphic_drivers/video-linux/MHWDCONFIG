@@ -19,10 +19,7 @@ DEVICEIDS="*"
 MHWDCONFLICTS="video-vesa"
 
 # Dependencies
-DEPENDS="xf86-video-ati
-         xf86-video-amdgpu
-         xf86-video-intel
-         xf86-video-nouveau
+DEPENDS="xf86-video-amdgpu
          vulkan-intel
          vulkan-radeon
          opencl-mesa
