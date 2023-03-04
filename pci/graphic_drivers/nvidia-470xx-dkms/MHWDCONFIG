@@ -24,7 +24,6 @@ DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx"
 DEPKMOD="nvidia-470xx-dkms"
 
 XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-MHWDGPU_BLCKLSTNVIDIA="/etc/modprobe.d/mhwd-gpu.conf"
 
 post_install()
 {
@@ -42,13 +41,6 @@ post_remove()
 {
     if [ -e "${XORGFILE}" ]; then
         rm "${XORGFILE}"
-    fi
-
-    if [ -f "${MHWDGPU_BLCKLSTNVIDIA}" ]; then
-        sed -i '/^blacklist nouveau/d' "${MHWDGPU_BLCKLSTNVIDIA}"
-        sed -i '/^blacklist ttm/d' "${MHWDGPU_BLCKLSTNVIDIA}"
-        sed -i '/^blacklist drm_kms_helper/d' "${MHWDGPU_BLCKLSTNVIDIA}"
-        sed -i '/^blacklist drm/d' "${MHWDGPU_BLCKLSTNVIDIA}"
     fi
 
     mkinitcpio -P
