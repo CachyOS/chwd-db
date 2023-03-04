@@ -20,11 +20,11 @@ MHWDCONFLICTS="video*nvidia*"
 
 # Dependencies
 DEPENDS="egl-wayland
-         gwe
          nvidia-utils
          nvidia-settings
          opencl-nvidia
-         nvidia-dkms"
+         nvidia-dkms
+         libva-nvidia-driver"
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
 CONKMOD="nvidia-dkms"
 

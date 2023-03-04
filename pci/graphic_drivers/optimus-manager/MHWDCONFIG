@@ -25,7 +25,6 @@ MHWDDEPENDS="video-linux"
 
 # Dependencies
 DEPENDS="egl-wayland
-         gwe
          nvidia-utils
          nvidia-settings
          opencl-nvidia
