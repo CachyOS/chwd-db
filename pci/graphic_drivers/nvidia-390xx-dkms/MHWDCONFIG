@@ -23,17 +23,9 @@ DEPENDS="nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx"
 DEPENDS_64="lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx"
 DEPKMOD="nvidia-390xx-dkms"
 
-XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-
 post_install()
 {
-    nvidia-xconfig -o "${XORGFILE}" --composite &>/dev/null
-    MHWD_ADD_BACKSPACE "${XORGFILE}"
-
-    # Remove logo
-    sed -i /'Section "Device"'/,/'EndSection'/s/'EndSection'/"\tOption \"NoLogo\" \"1\"\nEndSection"/g "${XORGFILE}"
-
-    mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
+    mhwd-gpu --setmod nvidia
 
     if [ ! "$(pgrep X)" ];  then
         modprobe nvidia-drm
@@ -41,19 +33,11 @@ post_install()
     fi
 
     sed -i 's/MODULES=.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/g' /etc/mkinitcpio.conf
-    mkinitcpio -P
 }
-
-
 
 post_remove()
 {
-    if [ -e "${XORGFILE}" ]; then
-        rm "${XORGFILE}"
-    fi
-
     sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
-    mkinitcpio -P
     mhwd-gpu --check
 }
 
