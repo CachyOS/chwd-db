@@ -25,11 +25,13 @@ DEPKMOD="nvidia-470xx-dkms"
 
 post_install()
 {
+    mkinitcpio -P
     mhwd-gpu --setmod nvidia
 }
 
 post_remove()
 {
+    mkinitcpio -P
     mhwd-gpu --check
 }
 

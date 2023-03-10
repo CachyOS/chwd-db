@@ -33,11 +33,13 @@ post_install()
     fi
 
     sed -i 's/MODULES=.*/MODULES=(nvidia nvidia_modeset nvidia_uvm nvidia_drm)/g' /etc/mkinitcpio.conf
+    mkinitcpio -P
 }
 
 post_remove()
 {
     sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
+    mkinitcpio -P
     mhwd-gpu --check
 }
 
