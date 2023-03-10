@@ -28,17 +28,9 @@ DEPENDS="egl-wayland
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
 CONKMOD="nvidia-dkms"
 
-XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-
 post_install()
 {
-    nvidia-xconfig -o "${XORGFILE}" --composite &>/dev/null
-    MHWD_ADD_BACKSPACE "${XORGFILE}"
-
-    # Remove logo
-    sed -i /'Section "Device"'/,/'EndSection'/s/'EndSection'/"\tOption \"NoLogo\" \"1\"\nEndSection"/g "${XORGFILE}"
-
-    mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
+    mhwd-gpu --setmod nvidia
 
     if [ ! "$(pgrep X)" ];  then
         modprobe nvidia-drm
@@ -48,9 +40,5 @@ post_install()
 
 post_remove()
 {
-    if [ -e "${XORGFILE}" ]; then
-        rm "${XORGFILE}"
-    fi
-
     mhwd-gpu --check
 }
