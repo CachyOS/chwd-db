@@ -42,14 +42,9 @@ DEPENDS="egl-wayland
          lib32-mesa-vdpau lib32-libva-intel-driver lib32-libva-mesa-driver lib32-libva-vdpau-driver
          lib32-vulkan-mesa-layers"
 
-XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-
 post_install()
 {
-    # Create an empty Xorg config file, configuration is already provided by nvidia-*-utils
-    MHWD_HEADING "${XORGFILE}"
-
-    mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
+    mhwd-gpu --setmod nvidia
 
     if [ ! "$(pgrep X)" ];  then
         modprobe nvidia-drm
@@ -61,8 +56,5 @@ post_install()
 
 post_remove()
 {
-    rm -f "${XORGFILE}"
-    rm -f "${UDEVFILE}"
-
     mhwd-gpu --check
 }

@@ -23,27 +23,13 @@ DEPENDS="nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx"
 DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx"
 DEPKMOD="nvidia-470xx-dkms"
 
-XORGFILE="/etc/X11/mhwd.d/nvidia.conf"
-
 post_install()
 {
-    nvidia-xconfig -o "${XORGFILE}" --composite &>/dev/null
-    MHWD_ADD_BACKSPACE "${XORGFILE}"
-
-    # Remove logo
-    sed -i /'Section "Device"'/,/'EndSection'/s/'EndSection'/"\tOption \"NoLogo\" \"1\"\nEndSection"/g "${XORGFILE}"
-
-    mhwd-gpu --setmod nvidia --setxorg "${XORGFILE}"
-    mkinitcpio -P
+    mhwd-gpu --setmod nvidia
 }
 
 post_remove()
 {
-    if [ -e "${XORGFILE}" ]; then
-        rm "${XORGFILE}"
-    fi
-
-    mkinitcpio -P
     mhwd-gpu --check
 }
 
