@@ -33,10 +33,9 @@ DEPENDS="egl-wayland
          nvidia-470xx-utils
          nvidia-470xx-settings
          libxnvctrl-470xx
-         opencl-nvidia-470xx
-         nvidia-470xx-dkms
-         lib32-nvidia-470xx-utils
-         lib32-opencl-nvidia-470xx"
+         opencl-nvidia-470xx"
+DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx"
+DEPKMOD="nvidia-470xx-dkms"
 
 post_install()
 {
