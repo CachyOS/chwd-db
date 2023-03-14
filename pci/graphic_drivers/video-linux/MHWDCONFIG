@@ -45,13 +45,6 @@ DEPENDS="xf86-video-amdgpu
 post_install()
 {
     mhwd-gpu --check
-    if [[ $(hwinfo --cpu | grep Vendor: -m1 | cut -d '"' -f2) == "GenuineIntel" ]] ; then
-        sed -i 's/MODULES=.*/MODULES=(crc32c-intel intel_agp i915 amdgpu radeon nouveau)/g' /etc/mkinitcpio.conf
-    else
-        sed -i 's/MODULES=.*/MODULES=(crc32c intel_agp i915 amdgpu radeon nouveau)/g' /etc/mkinitcpio.conf
-    fi
-
-    mkinitcpio -P
 }
 
 post_remove()
