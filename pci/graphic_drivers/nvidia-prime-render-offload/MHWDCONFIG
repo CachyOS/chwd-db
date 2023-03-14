@@ -44,4 +44,5 @@ post_install()
 post_remove()
 {
     mhwd-gpu --check
+    mhwd-gpu --cleanup
 }
