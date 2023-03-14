@@ -23,10 +23,9 @@ DEPENDS="egl-wayland
          nvidia-utils
          nvidia-settings
          opencl-nvidia
-         nvidia-dkms
          libva-nvidia-driver"
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
-CONKMOD="nvidia-dkms"
+DEPKMOD="nvidia-dkms"
 
 post_install()
 {

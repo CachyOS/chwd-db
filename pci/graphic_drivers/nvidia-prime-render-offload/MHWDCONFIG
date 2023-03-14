@@ -32,10 +32,9 @@ DEPENDS="egl-wayland
          nvidia-utils
          nvidia-settings
          opencl-nvidia
-         lib32-nvidia-utils
-         lib32-opencl-nvidia
-         nvidia-dkms
          nvidia-prime"
+DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
+DEPKMOD="nvidia-dkms"
 
 post_install()
 {
