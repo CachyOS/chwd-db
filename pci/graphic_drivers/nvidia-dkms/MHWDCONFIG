@@ -31,11 +31,6 @@ CONKMOD="nvidia-dkms"
 post_install()
 {
     mhwd-gpu --setmod nvidia
-
-    if [ ! "$(pgrep X)" ];  then
-        modprobe nvidia-drm
-        modprobe nvidia-uvm
-    fi
 }
 
 post_remove()
