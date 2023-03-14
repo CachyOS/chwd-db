@@ -36,6 +36,8 @@ DEPENDS="egl-wayland
          optimus-manager-qt
          bbswitch-dkms
          acpi_call-dkms"
+DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
+DEPKMOD="nvidia-dkms"
 
 post_install()
 {
