@@ -41,7 +41,6 @@ DEPKMOD="nvidia-dkms"
 
 post_install()
 {
-    mhwd-gpu --setmod nvidia
     if [ ! "$(pgrep X)" ];  then
         systemctl start optimus-manager.service
     fi
@@ -50,6 +49,4 @@ post_install()
 post_remove()
 {
     optimus-manager --cleanup
-    mhwd-gpu --check
-    mhwd-gpu --cleanup
 }

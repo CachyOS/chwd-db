@@ -22,15 +22,3 @@ MHWDCONFLICTS="video*nvidia* video*optimus*"
 DEPENDS="nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx"
 DEPENDS_64="lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx"
 DEPKMOD="nvidia-390xx-dkms"
-
-post_install()
-{
-    mhwd-gpu --setmod nvidia
-}
-
-post_remove()
-{
-    mhwd-gpu --check
-    mhwd-gpu --cleanup
-}
-
