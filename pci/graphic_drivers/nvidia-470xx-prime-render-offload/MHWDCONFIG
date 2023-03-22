@@ -36,14 +36,3 @@ DEPENDS="egl-wayland
          opencl-nvidia-470xx"
 DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx"
 DEPKMOD="nvidia-470xx-dkms"
-
-post_install()
-{
-    mhwd-gpu --setmod nvidia
-}
-
-post_remove()
-{
-    mhwd-gpu --check
-    mhwd-gpu --cleanup
-}
