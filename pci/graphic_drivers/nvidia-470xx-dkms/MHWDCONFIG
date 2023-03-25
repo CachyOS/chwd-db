@@ -19,6 +19,6 @@ CONKMOD="nvidia-390xx nvidia"
 MHWDCONFLICTS="video*nvidia* video*optimus*"
 
 # Dependencies
-DEPENDS="nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx"
-DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx"
+DEPENDS="nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx vulkan-icd-loader"
+DEPENDS_64="lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx lib32-vulkan-icd-loader"
 DEPKMOD="nvidia-470xx-dkms"
