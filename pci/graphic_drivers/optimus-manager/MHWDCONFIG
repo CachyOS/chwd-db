@@ -4,7 +4,7 @@ NAME="video-optimus-manager"
 INFO="Hybrid prime solution for NVIDIA Optimus Technology - Closed source NVIDIA driver & open source intel driver."
 VERSION="2022.01.29"
 FREEDRIVER="false"
-PRIORITY="31"
+PRIORITY="29"
 
 # NVIDIA cards
 CLASSIDS="0300 0302"
@@ -33,9 +33,7 @@ DEPENDS="egl-wayland
          nvidia-dkms
          nvidia-prime
          optimus-manager
-         optimus-manager-qt
-         bbswitch-dkms
-         acpi_call-dkms"
+         optimus-manager-qt"
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
 DEPKMOD="nvidia-dkms"
 
