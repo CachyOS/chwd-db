@@ -19,6 +19,5 @@ CONKMOD="nvidia-dkms"
 MHWDCONFLICTS="video*nvidia* video*optimus*"
 
 # Dependencies
-DEPENDS="nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx"
+DEPENDS="nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx nvidia-390xx-dkms"
 DEPENDS_64="lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx"
-DEPKMOD="nvidia-390xx-dkms"

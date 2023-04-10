@@ -28,10 +28,5 @@ MHWDCONFLICTS="video*nvidia*"
 MHWDDEPENDS="video-linux"
 
 # Dependencies
-DEPENDS="egl-wayland
-         nvidia-utils
-         nvidia-settings
-         opencl-nvidia
-         nvidia-prime"
+DEPENDS="egl-wayland nvidia-utils nvidia-settings opencl-nvidia nvidia-prime nvidia-dkms"
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia"
-DEPKMOD="nvidia-dkms"

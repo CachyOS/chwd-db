@@ -21,9 +21,9 @@ MHWDCONFLICTS="video*nvidia*"
 # Dependencies
 DEPENDS="egl-wayland
          nvidia-utils
+         nvidia-dkms
          nvidia-settings
          opencl-nvidia
          libva-nvidia-driver
          vulkan-icd-loader"
 DEPENDS_64="lib32-nvidia-utils lib32-opencl-nvidia lib32-vulkan-icd-loader"
-DEPKMOD="nvidia-dkms"
