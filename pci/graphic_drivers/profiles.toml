@@ -80,35 +80,20 @@ device_ids = "*"
 priority = 5
 packages = 'virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent vulkan-virtio gtkmm3'
 post_install = """
-    if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
-        # Virtualbox detected
-
-        # Load kernel modules and sync clock
-        systemctl enable --now --no-block vboxservice.service
-        systemctl enable --now --no-block vboxclient.service
-    else
-
-        if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
-            # Vmware detected
-            systemctl enable --now --no-block vmtoolsd.service
-        else
-            # Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
-            systemctl enable --now --no-block spice-vdagentd.socket
-            systemctl enable --now --no-block qemu-guest-agent.service
-        fi
-    fi
+    systemctl enable --now --no-block vboxservice.service
+    systemctl enable --now --no-block vboxclient.service
+    systemctl enable --now --no-block vmtoolsd.service
+    systemctl enable --now --no-block spice-vdagentd.socket
+    systemctl enable --now --no-block qemu-guest-agent.service
+    
     if [[ -e /etc/gdm/custom.conf ]]; then
         sed -i -e 's|#WaylandEnable=false|WaylandEnable=false|g' /etc/gdm/custom.conf
     fi
     sed -i 's/MODULES=.*/MODULES=(qxl virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
     mkinitcpio -P"""
 post_remove = """
-    if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
-        # Virtualbox detected
-        systemctl disable --now vboxservice.service
-    elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
-        # Vmware detected
-        systemctl disable --now vmtoolsd.service
-    fi
+    systemctl disable --now vboxservice.service
+    systemctl disable --now vmtoolsd.service
+    
     sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
     mkinitcpio -P"""
