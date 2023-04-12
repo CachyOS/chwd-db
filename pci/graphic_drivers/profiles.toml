@@ -83,11 +83,9 @@ post_install = """
     if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
         # Virtualbox detected
 
-        if [[ ! -d /run/openrc ]]; then
-            # Load kernel modules and sync clock
-            systemctl enable --now --no-block vboxservice.service
-            systemctl enable --now --no-block vboxclient.service
-        fi
+        # Load kernel modules and sync clock
+        systemctl enable --now --no-block vboxservice.service
+        systemctl enable --now --no-block vboxclient.service
     else
 
         if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
