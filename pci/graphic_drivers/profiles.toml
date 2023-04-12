@@ -88,8 +88,6 @@ post_install = """
             systemctl enable --now --no-block vboxservice.service
             systemctl enable --now --no-block vboxclient.service
         fi
-        # We have to make /dev/vboxuser read-write, otherwise VBoxClient won't be able to connect. This is not done automatically until the next reboot.
-        chmod 666 /dev/vboxuser
     else
 
         if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
