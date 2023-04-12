@@ -19,25 +19,19 @@ nonfree = true
 class_ids = "0300 0380 0302"
 vendor_ids = "10de"
 priority = 10
-packages = ['nvidia-dkms', 'nvidia-utils', 'egl-wayland', 'nvidia-settings',
-'opencl-nvidia', 'lib32-nvidia-utils', 'libva-nvidia-driver',
-'vulkan-icd-loader', "lib32-vulkan-icd-loader"]
+packages = 'nvidia-dkms nvidia-utils egl-wayland nvidia-settings opencl-nvidia lib32-nvidia-utils libva-nvidia-driver vulkan-icd-loader lib32-vulkan-icd-loader'
 device_ids = ">/var/lib/mhwd/ids/pci/nvidia.ids"
 
 [nvidia-dkms.470xx]
 desc = 'Closed source NVIDIA drivers for Linux (470xx branch, only for Kepler GPUs)'
 priority = 9
-packages = ['nvidia-470xx-dkms', 'nvidia-470xx-utils', 'nvidia-470xx-settings',
-'opencl-nvidia-470xx', 'vulkan-icd-loader', 'lib32-nvidia-470xx-utils',
-'lib32-opencl-nvidia-470xx', 'lib32-vulkan-icd-loader']
+packages = 'nvidia-470xx-dkms nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx vulkan-icd-loader lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx lib32-vulkan-icd-loader'
 device_ids = ">/var/lib/mhwd/ids/pci/nvidia-470xx.ids"
 
 [nvidia-dkms.390xx]
 desc = 'Closed source NVIDIA drivers for Linux (390xx branch, only for Fermi GPUs)'
 priority = 8
-packages = ['nvidia-390xx-dkms', 'nvidia-390xx-utils', 'nvidia-390xx-settings',
-'opencl-nvidia-390xx', 'nvidia-390xx-utils', 'nvidia-390xx-settings',
-'opencl-nvidia-390xx', 'lib32-nvidia-390xx-utils', 'lib32-opencl-nvidia-390xx']
+packages = 'nvidia-390xx-dkms nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx'
 device_ids = ">/var/lib/mhwd/ids/pci/nvidia-390xx.ids"
 
 [nouveau]
@@ -46,9 +40,7 @@ nonfree = false
 class_ids = "0300 0302"
 vendor_ids = "10de"
 priority = 0
-packages = ['mesa', 'lib32-mesa', 'libva-mesa-driver', 'mesa-vdpau',
-'lib32-libva-mesa-driver', 'opencl-mesa', 'libva-vdpau-driver',
-'lib32-libva-vdpau-driver']
+packages = 'mesa lib32-mesa libva-mesa-driver mesa-vdpau lib32-libva-mesa-driver opencl-mesa libva-vdpau-driver lib32-libva-vdpau-driver'
 
 [intel]
 desc = "Mesa open source driver for Intel"
@@ -57,9 +49,7 @@ class_ids = "0300 0302"
 vendor_ids = "8086"
 device_ids = "*"
 priority = 4
-packages = ['mesa', 'lib32-mesa', 'libva-intel-driver',
-'lib32-libva-intel-driver', 'opencl-mesa', 'vulkan-intel',
-"lib32-vulkan-intel", 'intel-media-driver', 'mesa-vdpau', 'lib32-mesa-vdpau']
+packages = 'mesa lib32-mesa libva-intel-driver lib32-libva-intel-driver opencl-mesa vulkan-intel lib32-vulkan-intel intel-media-driver mesa-vdpau lib32-mesa-vdpau'
 
 [amd]
 desc = "Mesa open source driver for AMD"
@@ -68,9 +58,7 @@ class_ids = "0300 0302"
 vendor_ids = "1002"
 device_ids = "*"
 priority = 4
-packages = ['xf86-video-amdgpu', 'mesa', 'lib32-mesa', 'opencl-mesa',
-'vulkan-radeon', "lib32-vulkan-radeon", "libva-mesa-driver",
-"lib32-libva-mesa-driver", 'mesa-vdpau', 'lib32-mesa-vdpau']
+packages = 'xf86-video-amdgpu mesa lib32-mesa opencl-mesa vulkan-radeon lib32-vulkan-radeon libva-mesa-driver lib32-libva-mesa-driver mesa-vdpau lib32-mesa-vdpau'
 
 [fallback]
 desc = 'Fallback profile'
@@ -79,7 +67,7 @@ class_ids = "0300 0380 0302"
 vendor_ids = "1002 8086 10de"
 device_ids = "*"
 priority = 3
-packages = ['mesa', 'lib32-mesa', 'vulkan-swrast', 'xf86-video-vesa']
+packages = 'mesa lib32-mesa vulkan-swrast xf86-video-vesa'
 
 [virtualmachine]
 desc = 'X.org vmware video driver and open-vm-tools/virtualbox tools'
@@ -90,7 +78,7 @@ class_ids = "0300"
 vendor_ids = "80ee 15AD 1af4 1b36 1013"
 device_ids = "*"
 priority = 5
-packages = ['virtualbox-guest-utils', 'xf86-video-vmware', 'open-vm-tools', 'xf86-input-vmmouse', 'spice-vdagent', 'qemu-guest-agent', 'vulkan-virtio', 'gtkmm3']
+packages = 'virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent vulkan-virtio gtkmm3'
 post_install = """
     if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
         # Virtualbox detected
