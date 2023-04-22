@@ -85,23 +85,21 @@ post_install = """
 
         # Load kernel modules and sync clock
         systemctl enable --now --no-block vboxservice.service
-        systemctl enable --now --no-block vboxclient.service
     else
 
         if [[ "$(systemd-detect-virt)" == "vmware" ]]; then
             # Vmware detected
             systemctl enable --now --no-block vmtoolsd.service
         else
-            # Not virtualbox or vmware. Start spice-vdagentd.socket to auto detect if spice is in use. Otherwise, do nothing.
-            systemctl enable --now --no-block spice-vdagentd.socket
             systemctl enable --now --no-block qemu-guest-agent.service
+
+            sed -i 's/MODULES=.*/MODULES=(virtio virtio_blk virtio_pci virtio_net)/g' /etc/mkinitcpio.conf
+            mkinitcpio -P
         fi
     fi
     if [[ -e /etc/gdm/custom.conf ]]; then
         sed -i -e 's|#WaylandEnable=false|WaylandEnable=false|g' /etc/gdm/custom.conf
-    fi
-    sed -i 's/MODULES=.*/MODULES=(qxl virtio-gpu virtio virtio_scsi virtio_blk virtio_pci virtio_net virtio_ring)/g' /etc/mkinitcpio.conf
-    mkinitcpio -P"""
+    fi"""
 post_remove = """
     if [[ "$(systemd-detect-virt)" == "oracle" ]]; then
         # Virtualbox detected
@@ -109,6 +107,7 @@ post_remove = """
     elif [[ "$(systemd-detect-virt)" == "vmware" ]]; then
         # Vmware detected
         systemctl disable --now vmtoolsd.service
-    fi
-    sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
-    mkinitcpio -P"""
+    else
+        sed -i 's/MODULES=.*/MODULES=()/g' /etc/mkinitcpio.conf
+        mkinitcpio -P
+    fi"""
