@@ -25,7 +25,7 @@ device_ids = ">/var/lib/mhwd/ids/pci/nvidia.ids"
 [nvidia-dkms.470xx]
 desc = 'Closed source NVIDIA drivers for Linux (470xx branch, only for Kepler GPUs)'
 priority = 9
-packages = 'nvidia-470xx-dkms nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx vulkan-icd-loader lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx lib32-vulkan-icd-loader'
+packages = 'nvidia-470xx-dkms nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx vulkan-icd-loader lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx lib32-vulkan-icd-loader libva-nvidia-driver'
 device_ids = ">/var/lib/mhwd/ids/pci/nvidia-470xx.ids"
 
 [nvidia-dkms.390xx]
