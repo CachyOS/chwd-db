@@ -1,3 +1,3 @@
-## mhwd-db-cachyos
+## chwd-db
 
-mhwd-db for CachyOS and Arch Linux.
+Profiles we use at CachyOS for chwd :)
