@@ -20,19 +20,19 @@ class_ids = "0300 0380 0302"
 vendor_ids = "10de"
 priority = 10
 packages = 'nvidia-dkms nvidia-utils egl-wayland nvidia-settings opencl-nvidia lib32-opencl-nvidia lib32-nvidia-utils libva-nvidia-driver vulkan-icd-loader lib32-vulkan-icd-loader'
-device_ids = ">/var/lib/mhwd/ids/pci/nvidia.ids"
+device_ids = '*'
 
 [nvidia-dkms.470xx]
 desc = 'Closed source NVIDIA drivers for Linux (470xx branch, only for Kepler GPUs)'
 priority = 9
 packages = 'nvidia-470xx-dkms nvidia-470xx-utils nvidia-470xx-settings opencl-nvidia-470xx vulkan-icd-loader lib32-nvidia-470xx-utils lib32-opencl-nvidia-470xx lib32-vulkan-icd-loader libva-nvidia-driver'
-device_ids = ">/var/lib/mhwd/ids/pci/nvidia-470xx.ids"
+device_name_pattern = '(GK)\w+'
 
 [nvidia-dkms.390xx]
 desc = 'Closed source NVIDIA drivers for Linux (390xx branch, only for Fermi GPUs)'
 priority = 8
 packages = 'nvidia-390xx-dkms nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx nvidia-390xx-utils nvidia-390xx-settings opencl-nvidia-390xx lib32-nvidia-390xx-utils lib32-opencl-nvidia-390xx'
-device_ids = ">/var/lib/mhwd/ids/pci/nvidia-390xx.ids"
+device_name_pattern = '(GF)\w+'
 
 [nouveau]
 desc = "Open Nouveau driver for NVIDIA graphics cards (Only for old GPUs)"
