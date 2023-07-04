@@ -75,7 +75,7 @@ nonfree = false
 class_ids = "0300"
 # Virtualbox version 6.0 uses VMSVGA on Linux guests by default, which has VMWare's VENDORID.
 # VENDOR VMWare=80ee Virtualbox=15AD Redhat(QXL)=1af4 Redhat(VirtIO)=1b36 cirrus=1013
-vendor_ids = "80ee 15AD 1af4 1b36 1013"
+vendor_ids = "80ee 15AD 1af4 1b36 1013 1234"
 device_ids = "*"
 priority = 5
 packages = 'virtualbox-guest-utils xf86-video-vmware open-vm-tools xf86-input-vmmouse spice-vdagent qemu-guest-agent vulkan-virtio gtkmm3'
