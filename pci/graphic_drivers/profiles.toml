@@ -49,7 +49,7 @@ class_ids = "0300 0302"
 vendor_ids = "8086"
 device_ids = "*"
 priority = 4
-packages = 'mesa lib32-mesa libva-intel-driver lib32-libva-intel-driver opencl-mesa vulkan-intel lib32-vulkan-intel intel-media-driver mesa-vdpau lib32-mesa-vdpau'
+packages = 'mesa lib32-mesa libva-intel-driver lib32-libva-intel-driver opencl-clover-mesa lib32-opencl-clover-mesa opencl-rusticl-mesa lib32-opencl-rusticl-mesa vulkan-intel lib32-vulkan-intel intel-media-driver mesa-vdpau lib32-mesa-vdpau'
 
 [amd]
 desc = "Mesa open source driver for AMD"
