@@ -26,9 +26,11 @@ conditional_packages = """
 
     if [ -n "$kernels" ]; then
         for kernel in $kernels; do
-            if [[ "$kernel" != *-headers ]]; then
-                modules+=" ${kernel}-nvidia"
-            fi
+            case "$kernel" in
+                *-headers|*-zfs);;
+                *-nvidia) modules+= " ${kernel}";;
+                *) modules+=" ${kernel}-nvidia";;
+            esac
         done
     else
         modules="nvidia-dkms"
