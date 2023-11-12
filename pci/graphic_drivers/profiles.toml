@@ -24,17 +24,22 @@ conditional_packages = """
     kernels="$(pacman -Qqs "^linux-cachyos")"
     modules=""
 
-    if [ -n "$kernels" ]; then
-        for kernel in $kernels; do
-            case "$kernel" in
-                *-headers|*-zfs);;
-                *-nvidia) modules+= " ${kernel}";;
-                *) modules+=" ${kernel}-nvidia";;
-            esac
-        done
-    else
-        modules="nvidia-dkms"
-    fi
+
+    for kernel in $kernels; do
+        case "$kernel" in
+            *-headers|*-zfs);;
+            *-nvidia) modules+= " ${kernel}";;
+            *) modules+=" ${kernel}-nvidia";;
+        esac
+    done
+
+    # Install NVIDIA stock modules if stock arch kernels are available
+    pacman -Qqs '^linux$' && modules+=" nvidia"
+    pacman -Qqs '^linux-lts$' && modules+=" nvidia-lts"
+
+    # Fallback if there are no kernels with pre-built modules
+    [ -z "$modules" ] && modules="nvidia-dkms"
+
 
     echo $modules"""
 device_ids = '*'
