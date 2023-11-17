@@ -32,10 +32,6 @@ conditional_packages = """
         esac
     done
 
-    # Install NVIDIA stock modules if stock arch kernels are available
-    pacman -Qqs '^linux$' 1>/dev/null && modules+=" nvidia"
-    pacman -Qqs '^linux-lts$' 1>/dev/null && modules+=" nvidia-lts"
-
     # Fallback if there are no kernels with pre-built modules
     [ -z "$modules" ] && modules="nvidia-dkms"
 
