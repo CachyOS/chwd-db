@@ -39,7 +39,7 @@ conditional_packages = """
     # Fallback if there are no kernels with pre-built modules
     [ -z "$modules" ] && modules="nvidia-dkms"
 
-    echo '$modules'
+    echo "$modules"
 """
 device_ids = '*'
 
